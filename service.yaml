@@ -1,0 +1,23 @@
+# verzia API z dokumentácie
+apiVersion: v1
+# Druh objektu
+kind: Service
+# informácie o objekte
+metadata:
+  # Meno služby
+  name: app-service
+# Špecifikácia služby
+spec:
+  # Ktoré pody vykonávajú službu
+  selector:
+    app: app
+  # Porty služby
+  type: LoadBalancer
+  ports:
+    - protocol: "TCP"
+      # Port služby
+      port: 6000
+      # Port na Pode
+      targetPort: 5000
+      #nodePort: 30880
+      #type: nodePort

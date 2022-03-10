@@ -1,0 +1,82 @@
+# Použité API
+apiVersion: apps/v1
+# Druh objektu
+kind: StatefulSet
+# Meno objektu
+metadata:
+  name: statefulset
+# Špecifikácia objektu
+spec:
+  # prepojenie s podom podľa štítku podu
+  selector:
+    matchLabels:
+      app: postgres
+  # meno služby
+  serviceName: postgres
+  # Počet inštancií podov
+  replicas: 1
+  # Šablóna podu
+  template:
+    metadata:
+      # Štítok podu
+      labels:
+        app: postgres
+    spec:
+      # Kontajnery podu
+      containers:
+        # meno kontajnera
+      - name: postgres
+        # Meno obrazu
+        image: postgres:10.5
+        # otvorený port kontajnera
+        ports:
+          - name: postgres
+            containerPort: 5432
+            protocol: TCP
+        # Premenné prostredia pre konfiguráciu kontajnera
+        env:
+            # Meno používateľa databázy
+          - name: POSTGRES_USER
+            value: postgres
+            # Meno databázy
+          - name: POSTGRES_DB
+            # Heslo na pripojenie do databázy
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            value: verysecret
+        # Požiadavky na trvalý zväzok
+        volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            # Meno požiadavky na zväzok 
+            name: postgrespvc
+  volumeClaimTemplates:
+  - metadata:
+      # meno požiadavky na trvalý zväzok
+      # Musí byť rovnaké ako meno zväzku 
+      # vo volumeMounts v Pode
+      name: postgrespvc
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      # Automatické pridelenie trvalého zväzku
+      # Podľa toho vieme, ktorý zväzok prideliť
+      storageClassName: "local"
+      resources:
+        requests:
+          # Požiadavky na veľkosť trvalého zväzku
+          storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: statefulset
+  labels:
+    type: local
+spec:
+  storageClassName: local
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  hostPath:
+    path: "/tmp/statefulset"

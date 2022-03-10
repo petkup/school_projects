@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/7a29c2d8-8c66-4bdc-8bbb-c53b853f6203/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/decimal-to-binary-and-hexadecimal",
+    "appService.deploySubpath": "."
+}

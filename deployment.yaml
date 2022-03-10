@@ -1,0 +1,36 @@
+# verziu API zistíte z dokumentácie
+apiVersion: apps/v1
+# Druh objektu
+kind: Deployment
+# O objekte
+metadata:
+  # Meno objektu
+  name: app
+# špecifikácia objektu
+spec:
+  # Počet podov ktorý sa má vytvoriť
+  replicas: 1
+  # Selektor vytvára prepojenie Deploymentu a Podu
+  # Vyberá tie PODy ktoré majú štítok nginx
+  selector:
+    matchLabels:
+      app: app
+  # Šablóna PODu
+  template:
+    metadata:
+      # štítok PODu - na spojenie Deploymentu a Podu
+      labels:
+        app: app
+    spec:
+      # kontajnery PODu
+      containers:
+      # Len jeden kontajner s aplikáciou nginx
+      - name: app
+        # Meno a verzia obrazu
+        image: app:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        # Ak je to potrebné, tu uvedieme ďalšiu 
+        # konfiguráciu kontajnera, napr. mapovanie zväzkov
+        # alebo premenné prostredia
