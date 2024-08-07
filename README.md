@@ -2,11 +2,6 @@ Peter Kupka, Základy klaudvých technológií
 
 Skúška
 
-Aplikácia je dostupná na https://decimal-to-binary-and-hexadecimal.azurewebsites.net/
-
-V zadaní som použil webovú aplikáciu zo zadania č.2.
-Zadanie bolo treba upraviť tak, aby aplikácia bola dostuná
-na verejnom klaude Azure.
 Aplikácia pozostáva z webovej python stránky a SQL databázy.
 Na SQL server možno pripojiť napríklad pomocou 
 SQL Server Management Studio, kde je možné upravovať databázu.
@@ -14,9 +9,7 @@ Aplikácia slúži na prevod celých čísel z desiatkovej
 sústavy do dvojkovej a šestnástkovej sústavy.
 
 Trvalý zväzok: statefulset.yaml - Stará sa o zálohovanie dát 
-v prípade, že je aplikácia ukončená alebo spadne. 
-statefulset.yaml sa stará o zálohovanie dát v prípade, že je 
-aplikácia ukončená alebo spadne. Je tu definovaný objekt PersistentVolume.
+v prípade, že je aplikácia ukončená alebo spadne.. Je tu definovaný objekt PersistentVolume.
 Kubeernetes objekty som pridal do pomenovaného zväzku skuska.
 Aplikácia je nasadená pomocou objektu deployment.
 Service.yaml mi pridelí verejnú IP adresu pomocou príkazu:
